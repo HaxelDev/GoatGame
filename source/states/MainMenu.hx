@@ -7,8 +7,8 @@ import flixel.text.FlxText;
 class MainMenu extends FlxState
 {
 	var titleText:FlxText;
-	var storyOption:FlxText;
-	var modsOption:FlxText;
+	var playOption:FlxText;
+	var editorOption:FlxText;
 	var optionsOption:FlxText;
 	var selectedOption:Int = 0;
 
@@ -18,13 +18,13 @@ class MainMenu extends FlxState
 		titleText.setFormat(null, 48, 0xFFFFFF, "center");
 		add(titleText);
 
-		storyOption = new FlxText(0, FlxG.height * 0.4, FlxG.width, "Play");
-		storyOption.setFormat(null, 32, 0xFFFFFF, "center");
-		add(storyOption);
+		playOption = new FlxText(0, FlxG.height * 0.4, FlxG.width, "Play");
+		playOption.setFormat(null, 32, 0xFFFFFF, "center");
+		add(playOption);
 
-		modsOption = new FlxText(0, FlxG.height * 0.5, FlxG.width, "Editor");
-		modsOption.setFormat(null, 32, 0xFFFFFF, "center");
-		add(modsOption);
+		editorOption = new FlxText(0, FlxG.height * 0.5, FlxG.width, "Editor");
+		editorOption.setFormat(null, 32, 0xFFFFFF, "center");
+		add(editorOption);
 
 		optionsOption = new FlxText(0, FlxG.height * 0.6, FlxG.width, "Options");
 		optionsOption.setFormat(null, 32, 0xFFFFFF, "center");
@@ -44,8 +44,8 @@ class MainMenu extends FlxState
 			selectedOption = (selectedOption - 1 + 3) % 3;
 		}
 
-		storyOption.color = (selectedOption == 0) ? 0xFFFF00 : 0xFFFFFF;
-		modsOption.color = (selectedOption == 1) ? 0xFFFF00 : 0xFFFFFF;
+		playOption.color = (selectedOption == 0) ? 0xFFFF00 : 0xFFFFFF;
+		editorOption.color = (selectedOption == 1) ? 0xFFFF00 : 0xFFFFFF;
 		optionsOption.color = (selectedOption == 2) ? 0xFFFF00 : 0xFFFFFF;
 
 		if (FlxG.keys.justPressed.ENTER)
