@@ -6,73 +6,61 @@ import flixel.text.FlxText;
 
 class MainMenu extends FlxState
 {
-	private var title:FlxText;
-	private var menuItems:Array<FlxText>;
-	private var selectedItemIndex:Int = 0;
+	var titleText:FlxText;
+	var storyOption:FlxText;
+	var modsOption:FlxText;
+	var optionsOption:FlxText;
+	var selectedOption:Int = 0;
 
 	override public function create():Void
 	{
+		titleText = new FlxText(0, FlxG.height * 0.2, FlxG.width, "Main Menu");
+		titleText.setFormat(null, 48, 0xFFFFFF, "center");
+		add(titleText);
+
+		storyOption = new FlxText(0, FlxG.height * 0.4, FlxG.width, "Play");
+		storyOption.setFormat(null, 32, 0xFFFFFF, "center");
+		add(storyOption);
+
+		modsOption = new FlxText(0, FlxG.height * 0.5, FlxG.width, "Editor");
+		modsOption.setFormat(null, 32, 0xFFFFFF, "center");
+		add(modsOption);
+
+		optionsOption = new FlxText(0, FlxG.height * 0.6, FlxG.width, "Options");
+		optionsOption.setFormat(null, 32, 0xFFFFFF, "center");
+		add(optionsOption);
+
 		super.create();
-
-		title = new FlxText(100, 50, 400, "Pixel Rush");
-		title.size = 40;
-		title.color = 0xff0000;
-		add(title);
-
-		menuItems = [];
-
-		var playText:FlxText = new FlxText(100, 150, 200, "Play");
-		var editorText:FlxText = new FlxText(100, 200, 200, "Editor");
-		var optionsText:FlxText = new FlxText(100, 250, 200, "Options");
-		var exitText:FlxText = new FlxText(100, 300, 200, "Exit");
-
-		menuItems.push(playText);
-		menuItems.push(editorText);
-		menuItems.push(optionsText);
-		menuItems.push(exitText);
-
-		for (menuItem in menuItems)
-		{
-			menuItem.size = 20;
-			add(menuItem);
-		}
-
-		menuItems[selectedItemIndex].color = 0xff0000;
 	}
 
 	override public function update(elapsed:Float):Void
 	{
-		super.update(elapsed);
+		if (FlxG.keys.justPressed.DOWN)
+		{
+			selectedOption = (selectedOption + 1) % 3;
+		}
+		else if (FlxG.keys.justPressed.UP)
+		{
+			selectedOption = (selectedOption - 1 + 3) % 3;
+		}
 
-		if (FlxG.keys.justPressed.UP)
-		{
-			menuItems[selectedItemIndex].color = 0xffffff;
-			selectedItemIndex = (selectedItemIndex - 1 + menuItems.length) % menuItems.length;
-			menuItems[selectedItemIndex].color = 0xff0000;
-		}
-		else if (FlxG.keys.justPressed.DOWN)
-		{
-			menuItems[selectedItemIndex].color = 0xffffff;
-			selectedItemIndex = (selectedItemIndex + 1) % menuItems.length;
-			menuItems[selectedItemIndex].color = 0xff0000;
-		}
+		storyOption.color = (selectedOption == 0) ? 0xFFFF00 : 0xFFFFFF;
+		modsOption.color = (selectedOption == 1) ? 0xFFFF00 : 0xFFFFFF;
+		optionsOption.color = (selectedOption == 2) ? 0xFFFF00 : 0xFFFFFF;
 
 		if (FlxG.keys.justPressed.ENTER)
 		{
-			selectMenuItem();
-		}
-	}
-
-	private function selectMenuItem():Void
-	{
-		switch (selectedItemIndex)
-		{
-			case 0:
+			if (selectedOption == 0)
+			{
 				FlxG.switchState(new states.PlayState());
-			case 1:
+			}
+			else if (selectedOption == 1)
+			{
 				FlxG.switchState(new states.EditorState());
-			case 2:
-			case 3:
+			}
+			else if (selectedOption == 2) {}
 		}
+
+		super.update(elapsed);
 	}
 }
