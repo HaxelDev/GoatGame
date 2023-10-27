@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import states.EditorState;
-import sys.io.File;
 
 class PlayState extends FlxState
 {
@@ -22,7 +21,11 @@ class PlayState extends FlxState
 		levelData = new Array<Array<Int>>();
 		blocks = new Array<FlxSprite>();
 
-		var jsonMapData:String = File.getContent("assets/data/map.json");
+		#if html
+		var jsonMapData:String = openfl.utils.Assets.getText("assets/data/map.json");
+		#else
+		var jsonMapData:String = sys.io.File.getContent("assets/data/map.json");
+		#end
 
 		try
 		{
