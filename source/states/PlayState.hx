@@ -21,10 +21,10 @@ class PlayState extends FlxState
 		levelData = new Array<Array<Int>>();
 		blocks = new Array<FlxSprite>();
 
-		#if html
-		var jsonMapData:String = openfl.utils.Assets.getText("assets/data/map.json");
-		#else
+		#if sys
 		var jsonMapData:String = sys.io.File.getContent("assets/data/map.json");
+		#else
+		var jsonMapData:String = openfl.utils.Assets.getText("assets/data/map.json");
 		#end
 
 		try
