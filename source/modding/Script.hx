@@ -5,49 +5,31 @@ import hscript.Parser;
 
 class Script
 {
-	public var program:hscript.Expr;
-	public var interp = new Interp();
-	public var parser = new Parser();
+	public static var program:hscript.Expr;
+	public static var interp = new Interp();
+	public static var parser = new Parser();
 
-	public function run(script:String):String
+	public static function run(script:String):String
 	{
 		parser.allowTypes = true;
 		parser.allowJSON = true;
 		parser.allowMetadata = true;
 
-		#if sys
-		var scriptFile:String = sys.io.File.getContent("assets/data/scripts/script.hx");
-		#else
-		var scriptFile:String = openfl.utils.Assets.getText("assets/data/scripts/script.hx");
-		#end
-
 		program = parser.parseString(script);
 
-		var require = (file:String, ?vars:String) ->
-		{
-			var fileScript = "assets/data/scripts/" + file + ".hx";
-			#if sys
-			var code = sys.io.File.getContent(fileScript);
-			#else
-			var code = openfl.utils.Assets.getText(fileScript);
-			#end
-			var lines = code.split("\n");
-			// https://github.com/HaxeFoundation/hscript/issues/100
-			// for( x in 0...lines.length ){
-			//	lines[x] = lines[x]+";";
-			//	lines[x] = ~/;;/;/g;
-			// }
-			return run(lines.join("\n"));
-		}
+		#if sys
 		interp.variables.set("console", {
-			log: haxe.Log.trace
+			log: function(message:Dynamic)
+			{
+				Sys.println(message);
+			}
 		});
-		interp.variables.set("call", call);
-		interp.variables.set("require", require);
+		#end
+
 		return interp.execute(program);
 	}
 
-	public function call(funcName:String, ?args:Array<Dynamic>):Dynamic
+	public static function call(funcName:String, ?args:Array<Dynamic>):Dynamic
 	{
 		if (args == null)
 			args = [];
