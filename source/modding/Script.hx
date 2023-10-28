@@ -1,3 +1,4 @@
+/**
 package modding;
 
 import hscript.Interp;
@@ -47,3 +48,4 @@ class Script
 		return true;
 	}
 }
+*/
