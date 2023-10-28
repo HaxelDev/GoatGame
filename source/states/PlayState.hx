@@ -74,8 +74,6 @@ class PlayState extends FlxState
 			}
 		}
 
-		loadScript();
-
 		FlxG.camera.follow(player, PLATFORMER, 0.65);
 		FlxG.worldBounds.set(0, 0, 9999999, 9999999);
 
@@ -142,17 +140,6 @@ class PlayState extends FlxState
 		{
 			FlxG.switchState(new states.MainMenu());
 		}
-	}
-
-	private function loadScript()
-	{
-		var fileScript = "assets/data/scripts/script.hx";
-		#if sys
-		var code = sys.io.File.getContent(fileScript);
-		#else
-		var code = openfl.utils.Assets.getText(fileScript);
-		#end
-		modding.Script.run(code);
 	}
 
 	private function setTile(x:Int, y:Int, type:Int):Void
