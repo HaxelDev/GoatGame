@@ -3,6 +3,7 @@ package states;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.group.FlxGroup;
 import states.EditorState;
 
 class PlayState extends FlxState
@@ -15,11 +16,27 @@ class PlayState extends FlxState
 	private var player:FlxSprite;
 	private var speed:Int = 120;
 	private var deceleration:Int = 15;
+	private var clouds:FlxGroup;
 
 	override public function create():Void
 	{
+		FlxG.camera.bgColor = 0xFF87CEEB;
+
 		levelData = new Array<Array<Int>>();
 		blocks = new Array<FlxSprite>();
+		clouds = new FlxGroup();
+
+		var cloudCount:Int = Std.random(10) + 10;
+		for (i in 0...cloudCount)
+		{
+			var cloud = new FlxSprite(FlxG.random.float(0, FlxG.width), FlxG.random.float(0, 200), 'assets/images/chmura.png');
+			cloud.velocity.x = FlxG.random.float(5, 15);
+			cloud.scale.set(1.5, 1.5);
+			cloud.active = true;
+			clouds.add(cloud);
+		}
+
+		add(clouds);
 
 		var jsonMapData:String = sys.io.File.getContent("assets/data/map.json");
 
