@@ -1,2 +1,2 @@
-# KozaGra
-sigmaaaa
+# Goat Game
+funny game
