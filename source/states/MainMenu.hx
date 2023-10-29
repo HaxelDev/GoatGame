@@ -34,7 +34,7 @@ class MainMenu extends FlxState
 
 		add(clouds);
 
-		titleText = new FlxText(0, FlxG.height * 0.2, FlxG.width, "Main Menu");
+		titleText = new FlxText(0, FlxG.height * 0.2, FlxG.width, "Goat Game");
 		titleText.setFormat(null, 48, 0xFFFFFF, "center");
 		add(titleText);
 
