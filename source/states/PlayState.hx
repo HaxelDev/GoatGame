@@ -26,14 +26,17 @@ class PlayState extends FlxState
 		blocks = new Array<FlxSprite>();
 		clouds = new FlxGroup();
 
-		var cloudCount:Int = Std.random(10) + 10;
-		for (i in 0...cloudCount)
+		var cloudX:Float = 0;
+		var cloudWidth:Float = 200;
+
+		while (cloudX < FlxG.width)
 		{
-			var cloud = new FlxSprite(FlxG.random.float(0, FlxG.width), FlxG.random.float(0, 200), 'assets/images/chmura.png');
+			var cloud = new FlxSprite(cloudX, FlxG.random.float(0, 200), 'assets/images/chmura.png');
 			cloud.velocity.x = FlxG.random.float(5, 15);
 			cloud.scale.set(1.5, 1.5);
 			cloud.active = true;
 			clouds.add(cloud);
+			cloudX += cloudWidth;
 		}
 
 		add(clouds);
@@ -151,6 +154,7 @@ class PlayState extends FlxState
 
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
+			FlxG.camera.bgColor = 0xFF000000;
 			FlxG.switchState(new states.MainMenu());
 		}
 	}
