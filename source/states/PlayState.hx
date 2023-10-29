@@ -20,8 +20,6 @@ class PlayState extends FlxState
 
 	override public function create():Void
 	{
-		FlxG.camera.bgColor = 0xFF87CEEB;
-
 		levelData = new Array<Array<Int>>();
 		blocks = new Array<FlxSprite>();
 		clouds = new FlxGroup();
@@ -32,7 +30,7 @@ class PlayState extends FlxState
 		while (cloudX < FlxG.width)
 		{
 			var cloud = new FlxSprite(cloudX, FlxG.random.float(0, 200), 'assets/images/chmura.png');
-			cloud.velocity.x = FlxG.random.float(5, 15);
+			cloud.velocity.x = FlxG.random.float(2, 5);
 			cloud.scale.set(1.5, 1.5);
 			cloud.active = true;
 			clouds.add(cloud);
@@ -154,7 +152,6 @@ class PlayState extends FlxState
 
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
-			FlxG.camera.bgColor = 0xFF000000;
 			FlxG.switchState(new states.MainMenu());
 		}
 	}
