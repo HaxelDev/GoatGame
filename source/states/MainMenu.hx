@@ -78,7 +78,10 @@ class MainMenu extends FlxState
 			{
 				FlxG.switchState(new states.EditorState());
 			}
-			else if (selectedOption == 2) {}
+			else if (selectedOption == 2)
+			{
+				FlxG.switchState(new states.OptionsState());
+			}
 		}
 
 		super.update(elapsed);
