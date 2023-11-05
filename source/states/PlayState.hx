@@ -14,6 +14,7 @@ class PlayState extends FlxState
 	private var currentTileType:Int = 1;
 	private var blocks:Array<FlxSprite>;
 	private var player:FlxSprite;
+	private var enemy:FlxSprite;
 	private var speed:Int = 120;
 	private var deceleration:Int = 15;
 	private var clouds:FlxGroup;
@@ -100,6 +101,8 @@ class PlayState extends FlxState
 
 		if (player != null)
 		{
+			player.velocity.x = 0;
+
 			if (FlxG.keys.pressed.LEFT)
 			{
 				player.velocity.x = -speed;
@@ -119,10 +122,6 @@ class PlayState extends FlxState
 				else if (player.velocity.x < 0)
 				{
 					player.velocity.x += deceleration;
-				}
-				else
-				{
-					player.velocity.x = 0;
 				}
 			}
 
@@ -150,6 +149,22 @@ class PlayState extends FlxState
 			}
 		}
 
+		if (enemy != null)
+		{
+			enemy.velocity.x = FlxG.random.float(10, 30);
+
+			if (enemy.x < 0)
+			{
+				enemy.x = 0;
+				enemy.velocity.x = FlxG.random.float(10, 30);
+			}
+			else if (enemy.x + enemy.width > FlxG.width)
+			{
+				enemy.x = FlxG.width - enemy.width;
+				enemy.velocity.x = -FlxG.random.float(10, 30);
+			}
+		}
+
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
 			FlxG.switchState(new states.MainMenu());
@@ -174,7 +189,19 @@ class PlayState extends FlxState
 		player.animation.add('idle', [0], 12);
 		player.animation.add('left', [2], 12);
 		player.scale.set(1.3, 1.3);
+		player.drag.x = 100;
 		add(player);
+	}
+
+	private function addEnemy(x:Int, y:Int):Void
+	{
+		enemy = new FlxSprite(x, y);
+		enemy.loadGraphic('assets/images/robot.png', true, tileWidth, tileHeight);
+		enemy.animation.add('idle', [1], 12);
+		enemy.animation.add('left', [3], 12);
+		enemy.scale.set(1.3, 1.3);
+		enemy.drag.x = 100;
+		add(enemy);
 	}
 
 	private function addBlock(x:Int, y:Int, type:Int):Void
